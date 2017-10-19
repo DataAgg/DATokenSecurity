@@ -11,6 +11,7 @@ import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +38,7 @@ public class UserService implements IUserService {
 	 * @see com.dataagg.security.IUserService#login(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Authentication login(String username, String userpswd) {
+	public Authentication login(String username, String userpswd, String remoteAddr) throws AuthenticationException {
 		if (username == null || username.trim().length() < 1) {
 			//username错误!
 			throw new BadCredentialsException(username);

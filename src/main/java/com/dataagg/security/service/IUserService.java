@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.dataagg.security.SecurityUtils;
@@ -20,7 +21,7 @@ public interface IUserService {
 	 * @param userpswd
 	 * @return
 	 */
-	public Authentication login(String username, String userpswd);
+	public Authentication login(String username, String userpswd, String remoteAddr) throws AuthenticationException;
 
 	/**
 	 * 根据认证信息Authentication生成token信息

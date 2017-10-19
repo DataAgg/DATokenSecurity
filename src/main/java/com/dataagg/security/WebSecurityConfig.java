@@ -10,7 +10,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,14 +21,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.dataagg.security.filter.TokenAuthenticationFilter;
-import com.dataagg.security.filter.TokenLoginFilter;
 import com.dataagg.security.service.IUserService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private AuthenticationManager authenticationManager;
 	@Autowired
 	private IUserService userService;
 	@Autowired
@@ -50,8 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/users2").hasAuthority("user_edit")
 			//url权限配置结束
 			.anyRequest().authenticated().and()
-			// We filter the api/login requests
-			.addFilterBefore(tokenLoginFilter(), UsernamePasswordAuthenticationFilter.class)
 			// And filter other requests to check the presence of token in header
 			.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 		;
@@ -78,11 +72,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public TokenAuthenticationFilter tokenAuthenticationFilter() {
 		return new TokenAuthenticationFilter(userService);
-	}
-
-	@Bean
-	public TokenLoginFilter tokenLoginFilter() {
-		return new TokenLoginFilter("/login", userService, authenticationManager);
 	}
 
 	//用户登陆密码的加密器
