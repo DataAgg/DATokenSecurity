@@ -1,0 +1,52 @@
+plugins {
+	id 'eclipse'
+	id 'idea'
+	id 'com.github.ben-manes.versions' version '0.15.0'
+	id 'org.springframework.boot' version '1.5.7.RELEASE'
+}
+
+group = 'com.dataagg'
+version = '0.1'
+description = """云南分布科技DATokenSecurity"""
+
+repositories {
+	mavenLocal()
+	maven {
+		url "http://maven.aliyun.com/nexus/content/groups/public/"
+	}
+	jcenter()
+	//mavenCentral()
+}
+
+dependencies {
+	testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.7.RELEASE'
+	compile 'org.springframework.boot:spring-boot-devtools:1.5.7.RELEASE'
+	compile 'org.springframework.boot:spring-boot-starter-web:1.5.7.RELEASE'
+	compile 'org.jodd:jodd-core:3.9.1'
+	compile 'org.jodd:jodd-bean:3.9.1'
+	compile 'org.jodd:jodd-http:3.9.1'
+	compile 'org.springframework.boot:spring-boot-starter-security'
+	compile 'org.springframework.security:spring-security-core:4.2.3.RELEASE'
+	testCompile 'junit:junit:4.12'
+}
+
+jar {
+	baseName = 'DATokenSecurity'
+	version = '0.1'
+	archiveName = 'DATokenSecurity.jar'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	options.encoding = "UTF-8"
+}
+configurations {
+	published
+}
+
+
+

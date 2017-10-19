@@ -1,0 +1,11 @@
+spring:
+  devtools:
+    restart:
+      enabled: true
+  application:
+    name: SpringTokenSecurity
+logging:
+  level:
+    root: WARN
+    com.dataagg: DEBUG
+    com.dataagg.security: DEBUG
